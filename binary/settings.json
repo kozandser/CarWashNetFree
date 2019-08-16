@@ -1,0 +1,16 @@
+{
+   "$types" : {
+      "CarWashNet.Infrastructure.AppSettings, CarWashNet, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null" : "1"
+   },
+   "$type" : "1",
+   "HasSavedUserPassword" : true,
+   "LastUserPassword" : "fS9qu/kNYBA=",
+   "LastUserID" : 1,
+   "LastAppCode" : "A010",
+   "IsMenuOpened" : false,
+   "IsMenuOverlay" : true,
+   "ShowPreparing" : true,
+   "ShowUnusing" : true,
+   "LastBackupTime" : null,
+   "LastUpdateCheckDate" : null
+}
