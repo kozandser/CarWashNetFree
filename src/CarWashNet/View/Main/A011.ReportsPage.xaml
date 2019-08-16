@@ -1,0 +1,198 @@
+﻿<Page x:Class="CarWashNet.Pages.ReportsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:CarWashNet.Pages"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+      xmlns:oxy="http://oxyplot.org/wpf"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="Работники">    
+    <Grid>
+        <DockPanel>
+            <ToolBarTray Style="{StaticResource ToolBarTrayStyle}">
+                <ToolBar>
+                    <TextBlock Text="От" VerticalAlignment="Center"/>
+                    <mahapps:DateTimePicker VerticalAlignment="Center" SelectedDate="{Binding PeriodFilter.StartDate}" IsEnabled="{Binding PeriodFilter.IsManualPeriod}" Margin="4 0 0 0"
+                                            mahapps:TextBoxHelper.Watermark="Начало"/>
+                    <TextBlock Text="до" VerticalAlignment="Center"  Margin="4 0 0 0"/>
+                    <mahapps:DateTimePicker VerticalAlignment="Center" SelectedDate="{Binding PeriodFilter.EndDate}" IsEnabled="{Binding PeriodFilter.IsManualPeriod}" Margin="4 0 0 0"
+                                            mahapps:TextBoxHelper.Watermark="Окончание"/>
+                    <ComboBox  Margin="4 0 4 0" Width="150"
+                           ItemsSource="{Binding PeriodFilter.Periods}"
+                           DisplayMemberPath="Caption"
+                           SelectedItem="{Binding PeriodFilter.SelectedPeriod}"
+                           VerticalAlignment="Center">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="IsEnabled" Value="{Binding IsActive}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>                    
+                    <Button Style="{StaticResource LoadItemsToolBarButton}" Command="{Binding RefreshReports}" />
+                </ToolBar>
+                <ToolBar Band="1">
+                    <Label Content="Количество заездов" Style="{StaticResource InfoItemCaptionStyle}"/>
+                    <Label Content="{Binding OrdersCount}" Style="{StaticResource InfoItemStyle}" />
+                    
+                    <Label Content="Количество услуг" Style="{StaticResource InfoItemCaptionStyle}"/>
+                    <Label Content="{Binding OrderItemsCount}" Style="{StaticResource InfoItemStyle}" />
+                    
+                    <Label Content="Сумма услуг" Style="{StaticResource InfoItemCaptionStyle}"/>
+                    <Label Content="{Binding OrdersCost}" ContentStringFormat="C2" Style="{StaticResource InfoItemStyle}" />
+                </ToolBar>
+            </ToolBarTray>
+            <TabControl mahapps:TabControlHelper.IsUnderlined="True">
+                <TabItem Header="Статистика">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Grid Height="200" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource CloudsColorBrush}">
+                                <oxy:PlotView Background="Transparent"  x:Name="plot_stat_srvc" Grid.Column="0" Margin="10"/>
+                            </Border>
+                            <DataGrid Grid.Column="1"
+                                      x:Name="dg_stat_srvc">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Услуга" Binding="{Binding Caption}" />
+                                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}" />
+                                    <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=C2}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Height="200" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource CloudsColorBrush}">
+                                <oxy:PlotView Background="Transparent"  x:Name="plot_stat_workers" Grid.Column="0" Margin="10" />
+                            </Border>
+                            <DataGrid Grid.Column="1"                                      
+                                      x:Name="dg_stat_workers">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Работник" Binding="{Binding Caption}"/>
+                                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}"/>
+                                    <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=C2}"/>
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        <Grid Height="200" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource CloudsColorBrush}">
+                                <oxy:PlotView Background="Transparent"  x:Name="plot_stat_pays" Grid.Column="0" Margin="10" />
+                            </Border>
+                            <DataGrid Grid.Column="1"
+                                      x:Name="dg_stat_pays">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Работник" Binding="{Binding Caption}" />
+                                    <DataGridTextColumn Header="Выплата" Binding="{Binding Sum, StringFormat=C2}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                        
+                        
+                                               
+                    </StackPanel>
+                    
+                </ScrollViewer>      
+                </TabItem>
+                <TabItem Header="Динамика">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <Grid Height="300" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource CloudsColorBrush}" Grid.Column="0">
+                                <StackPanel>
+                                    <oxy:PlotView Background="Transparent" Height="150" x:Name="plot_dyn_days_qty"/>
+                                    <oxy:PlotView Background="Transparent"  Height="150" x:Name="plot_dyn_days_cost"/>
+                                </StackPanel>
+                            </Border>
+                            <DataGrid Grid.Column="1"
+                                      x:Name="dg_dyn_days">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Дата"  Binding="{Binding Caption}"/>
+                                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}" />
+                                    <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=C2}"/>
+                                </DataGrid.Columns>                                
+                            </DataGrid>
+                        </Grid>
+                        <Grid Height="300" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource CloudsColorBrush}" Grid.Column="0">
+                                <StackPanel>
+                                    <oxy:PlotView Background="Transparent" Height="150" x:Name="plot_dyn_weeks_qty"/>
+                                    <oxy:PlotView Background="Transparent"  Height="150" x:Name="plot_dyn_weeks_cost"/>
+                                </StackPanel>
+                            </Border>
+                            <DataGrid Grid.Column="1"
+                                      x:Name="dg_dyn_weeks">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Неделя" Binding="{Binding Caption}" />
+                                    <DataGridTextColumn Header="Кол-во"  Binding="{Binding Count}" />
+                                    <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=C2}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                            <Grid Height="300" Margin="10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="600"/>
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+                            <Border Background="{StaticResource CloudsColorBrush}" Grid.Column="0">
+                                <StackPanel>
+                                    <oxy:PlotView Background="Transparent" Height="150" x:Name="plot_dyn_months_qty"/>
+                                    <oxy:PlotView Background="Transparent"  Height="150" x:Name="plot_dyn_months_cost"/>
+                                </StackPanel>
+                            </Border>
+                            <DataGrid Grid.Column="1"                                          
+                                      x:Name="dg_dyn_months">
+                                <DataGrid.Columns>
+                                    <DataGridTextColumn Header="Месяц" Binding="{Binding Caption}" />
+                                    <DataGridTextColumn Header="Кол-во" Binding="{Binding Count}" />
+                                    <DataGridTextColumn Header="Сумма" Binding="{Binding Sum, StringFormat=F2}" />
+                                </DataGrid.Columns>
+                            </DataGrid>
+                        </Grid>
+                            
+                        </StackPanel>
+                    </ScrollViewer>                    
+                </TabItem>
+                <TabItem Header="Разное" DataContext="{Binding TimelineDayViewModel}">
+                    <ScrollViewer>
+                        <StackPanel>
+                            <DockPanel Margin="10">
+                                <ToolBarTray Style="{StaticResource ToolBarTrayStyle}">
+                                    <ToolBar>
+                                        <DatePicker VerticalAlignment="Center" SelectedDate="{Binding TimelineDayDate}" FirstDayOfWeek="Monday" 
+                                                                mahapps:TextBoxHelper.Watermark="Дата"/>
+                                    </ToolBar>
+                                </ToolBarTray>
+                                <Border Background="{StaticResource CloudsColorBrush}">
+                                    <oxy:PlotView Background="Transparent" Height="300" x:Name="plot_timeline_day"
+                                                  />
+                                </Border>
+                            </DockPanel> 
+                        </StackPanel>
+                    </ScrollViewer>                                        
+                </TabItem>
+            </TabControl>
+        </DockPanel>
+    </Grid>
+</Page>

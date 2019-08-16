@@ -1,0 +1,332 @@
+﻿<Page x:Class="CarWashNet.View.AppSettingsPage"
+	  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+	  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+	  xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+	  xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+	  xmlns:sys="clr-namespace:System;assembly=mscorlib"
+	  xmlns:local="clr-namespace:CarWashNet.Pages"
+	  xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+	  xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+	  xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+	  xmlns:views="clr-namespace:CarWashNet.View"
+	  mc:Ignorable="d" 
+	  d:DesignHeight="800" d:DesignWidth="1200">    
+	<Grid>
+		<Border BorderBrush="{StaticResource PeterRiverColorBrush}" BorderThickness="0"
+				HorizontalAlignment="Center" VerticalAlignment="Center">
+			<ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+				<Grid>
+					<Grid.ColumnDefinitions>
+						<ColumnDefinition Width="350"/>
+						<ColumnDefinition Width="380"/>
+					</Grid.ColumnDefinitions>
+					<StackPanel Margin="2">
+						<GroupBox Header="О программе">
+							<StackPanel>
+								<TextBlock>
+									<Run Text="Версия программы:"/>
+									<Run Text="{Binding AppVersion}" FontWeight="Bold"/>
+								</TextBlock>
+								<TextBlock>
+									<Run Text="Версия БД:" />
+									<Run Text="{Binding DbVersion}" FontWeight="Bold"/>
+								</TextBlock>
+								<TextBlock>
+									<Run Text="Сайт:"/>
+									<Hyperlink>carwashnet.wordpress.com</Hyperlink>
+								</TextBlock>
+								<StackPanel Orientation="Horizontal" Margin="0 1 0 1">
+									<TextBlock Text="Почта: " VerticalAlignment="Center"/>
+									<TextBox Text="carwashnet@yandex.ru" IsReadOnly="True" Padding="-4" MinHeight="10" BorderThickness="0" Background="Transparent" VerticalAlignment="Center"/>
+								</StackPanel>
+							</StackPanel>
+						</GroupBox>					
+						
+						<GroupBox Header="Обновление">
+							<StackPanel>                                
+								<TextBox Text="{Binding Updater.LastUpdateCheckDate, Mode=OneWay, TargetNullValue=нет обновлений}" IsReadOnly="True"
+										 mahapps:TextBoxHelper.Watermark="Дата проверки обновления"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True" />
+								<TextBlock FontWeight="Bold" Margin="0 2 0 0"
+										   mahapps:VisibilityHelper.IsVisible="{Binding Updater.HasNewVersion, Mode=OneWay}">
+									<Hyperlink NavigateUri="{Binding Updater.UpdaterData.Link}"
+											   ToolTip="{Binding Updater.UpdaterData.Description}"
+											   Foreground="{StaticResource AlizarinColorBrush}"
+											   Command="{Binding Updater.OpenLinkInBrowser}">Есть новая версия!</Hyperlink>
+								</TextBlock>
+								<Button Content="Проверить обновления" Command="{Binding Updater.CheckUpdate}" Margin="0 4 0 0"/>
+							</StackPanel>
+						</GroupBox>
+						<GroupBox Header="Обратная связь">
+							<StackPanel>
+								<TextBox Text="{Binding Feedbacker.From}"
+										 mahapps:TextBoxHelper.Watermark="Ваш email (или имя)"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True"/>
+								<Slider Minimum="1" Maximum="5" Interval="1" IsSnapToTickEnabled="True" TickPlacement="TopLeft" x:Name="rating"
+										Value="{Binding Feedbacker.Rating}"
+										Margin="0 4 0 0"/>
+								<TextBlock Margin="0 4 0 0">
+									<Run Text="Оценка: "/>
+									<Run Text="{Binding Value, ElementName=rating}" FontWeight="Bold"/>
+								</TextBlock>
+								<TextBox Text="{Binding Feedbacker.Comment}"
+										 mahapps:TextBoxHelper.Watermark="Комментарий"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True"
+										 AcceptsReturn="True"
+										 TextWrapping="Wrap"
+										 Height="100"
+										 Margin="0 4 0 0"/>
+								<Button Content="Отправить" Command="{Binding Feedbacker.SendFeedback}" Margin="0 4 0 0"/>
+							</StackPanel>
+						</GroupBox>
+					</StackPanel>
+					<StackPanel Grid.Column="1" Margin="2">		
+						<GroupBox Header="Резервная копия">
+							<StackPanel>
+								<TextBox Text="{Binding Backuper.BackupPath, Mode=OneWay}" IsReadOnly="True"
+										 mahapps:TextBoxHelper.Watermark="Резервная копия"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True"/>
+								<TextBox Text="{Binding Backuper.LastBackupTime, Mode=OneWay, TargetNullValue=нет резервной копии}" IsReadOnly="True"
+										 mahapps:TextBoxHelper.Watermark="Дата резервной копии"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True"
+										 Margin="0 2 0 0"/>
+								<Button Content="Сделать резервную копию" Command="{Binding Backuper.BackupDb}" Margin="0 4 0 0"/>
+							</StackPanel>
+						</GroupBox>
+						<GroupBox Header="Активация">
+							<StackPanel>
+								<CheckBox IsChecked="{Binding Activator.IsActivated, Mode=OneWay}" Content="Программа активирована" IsHitTestVisible="False" Focusable="False" />
+								<CheckBox IsChecked="{Binding Activator.IsUnlimOrders, Mode=OneWay}" Content="Неограниченное количество заездов" Margin="0 2 0 0" IsHitTestVisible="False" Focusable="False" />
+								<CheckBox IsChecked="{Binding Activator.IsExtendedReports, Mode=OneWay}" Content="Расширенные отчеты" Margin="0 2 0 0" IsHitTestVisible="False" Focusable="False"/>
+								<TextBox Text="{Binding Activator.MachineID, Mode=OneWay}" IsReadOnly="True"
+										 mahapps:TextBoxHelper.Watermark="Код клиента"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True"
+										 Margin="0 2 0 0"/>
+								<DockPanel Margin="0 2 0 0">
+									<Border DockPanel.Dock="Right"
+											BorderBrush="{DynamicResource TextBoxBorderBrush}"
+											BorderThickness="0 1 1 1">
+										<StackPanel Orientation="Horizontal">
+											<Button Style="{StaticResource TextBoxButtonStyle}"
+													Content="{iconPacks:Material Kind=Plus, Width=10}"
+													Command="{Binding Activator.AddSerialNumber}"
+													CommandParameter="{Binding NewSerialNumber}"/>
+										</StackPanel>
+									</Border>
+									<TextBox Text="{Binding NewSerialNumber}"
+										 mahapps:TextBoxHelper.Watermark="Код активации"
+										 mahapps:TextBoxHelper.UseFloatingWatermark="True"/>
+								</DockPanel>								
+								<DataGrid Height="150"
+										  Margin="0 2 0 0"
+										  ItemsSource="{Binding Activator.SerialNumbers}"
+										  SelectedItem="{Binding SelectedSerialNumber}"
+										  GridLinesVisibility="None"
+										  HeadersVisibility="None"
+										  MinRowHeight="20">
+									<DataGrid.Columns>
+										<DataGridTemplateColumn Width="*">
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<TextBlock Text="{Binding Value}" TextTrimming="CharacterEllipsis"
+															   ToolTip="{Binding Value}"
+															   VerticalAlignment="Center"
+															   HorizontalAlignment="Left"
+															   Margin="4"/>
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
+										<DataGridTemplateColumn>
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<StackPanel Orientation="Horizontal">
+														<Border Margin="5" Width="7" Height="7"  ToolTip="Расширенные отчеты">
+															<Border.Style>
+																<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinColorBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsExtendedReports}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmerlandColorBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+														<Border Margin="5" Width="7" Height="7"  ToolTip="Неограниченное количество заездов">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinColorBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsUnlimOrders}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmerlandColorBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+														<Border Margin="5" Width="7" Height="7" ToolTip="Код действителен">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinColorBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsValid}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmerlandColorBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													</StackPanel>												
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
+										<DataGridTemplateColumn>
+											<DataGridTemplateColumn.CellTemplate>
+												<DataTemplate>
+													<Button Style="{StaticResource LightButtonStyle}"
+															Content="{iconPacks:Material Kind=Close, Width=15, Height=15}"
+															ToolTip="Удалить"
+															Command="{Binding DataContext.Activator.RemoveSerialNumber, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+															CommandParameter="{Binding DataContext.SelectedSerialNumber.Value, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+															Margin="2"/>													
+												</DataTemplate>
+											</DataGridTemplateColumn.CellTemplate>
+										</DataGridTemplateColumn>
+										
+										
+										
+									</DataGrid.Columns>
+									<!--<ListBox.ItemTemplate>
+											<DataTemplate>
+												<DockPanel>
+													<Button Style="{StaticResource LightButtonStyle}"
+															Content="{iconPacks:Material Kind=Close, Width=15, Height=15}"
+															ToolTip="Удалить"
+															Command="{Binding DataContext.RemoveSerialNumber, RelativeSource={RelativeSource AncestorType=ListBox}}"/>
+													<Border Margin="5" DockPanel.Dock="Right" Width="7" Height="7"  ToolTip="Расширенные отчеты">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinColorBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsExtendedReports}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmerlandColorBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													<Border Margin="5" DockPanel.Dock="Right" Width="7" Height="7"  ToolTip="Неограниченное количество заездов">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinColorBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsUnlimOrders}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmerlandColorBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													<Border Margin="5" DockPanel.Dock="Right" Width="7" Height="7" ToolTip="Код действителен">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinColorBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsValid}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmerlandColorBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													<TextBlock Text="{Binding Value}" TextTrimming="CharacterEllipsis"
+															   ToolTip="{Binding Value}"
+															   VerticalAlignment="Center" MaxWidth="150"/>
+												</DockPanel>
+											</DataTemplate>
+										</ListBox.ItemTemplate>--> 
+									
+								</DataGrid>
+								<!--<DockPanel Margin="0 5 0 0">
+									<TextBlock Text="Код активации:"  VerticalAlignment="Center" Width="100" DockPanel.Dock="Left"/>
+									<Button fa:Awesome.Content="Plus"
+											FontFamily="pack://application:,,,/FontAwesome.WPF;component/#FontAwesome"
+											Margin="2 0 0 0"
+											Click="AddActivation_Click"                                    
+											VerticalContentAlignment="Center"
+											Style="{StaticResource SquareButtonStyle}"
+											DockPanel.Dock="Right"
+											ToolTip="Добавить код активации"/>
+									<TextBox Text="{Binding NewSerialNumber}"/>
+
+								</DockPanel>-->
+								<!--<DockPanel  Margin="0 5 0 0">
+									<TextBlock Text="Коды активации:"  VerticalAlignment="Center" Width="100" DockPanel.Dock="Left"/>
+									<ListBox Height="102" BorderBrush="#FFCCCCCC" BorderThickness="1"
+											 ItemsSource="{Binding Source={x:Static local:Globals.Activator},Path=SerialNumbers, Mode=OneWay}"
+											 SelectedItem="{Binding SelectedSerialNumber}"
+											 x:Name="lbSN">
+										<ListBox.ItemTemplate>
+											<DataTemplate>
+												<DockPanel>
+													<Button klib:ControlsHelper.Icon="{StaticResource close-icon}"
+															DockPanel.Dock="Right"
+															Margin="5"
+															Style="{StaticResource IconChromelessButtonStyle}"
+															Click="RemoveActivation_Click"/>
+													<Border Margin="5" DockPanel.Dock="Right" Width="7" Height="7"  ToolTip="Расширенные отчеты">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsExtendedReports}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmeraldBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													<Border Margin="5" DockPanel.Dock="Right" Width="7" Height="7"  ToolTip="Неограниченное количество заездов">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsUnlimOrders}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmeraldBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													<Border Margin="5" DockPanel.Dock="Right" Width="7" Height="7" ToolTip="Код действителен">
+														<Border.Style>
+															<Style TargetType="Border">
+																<Setter Property="Background" Value="{StaticResource AlizarinBrush}"/>
+																<Style.Triggers>
+																	<DataTrigger Binding="{Binding IsValid}" Value="True">
+																		<Setter Property="Background" Value="{StaticResource EmeraldBrush}"/>
+																	</DataTrigger>
+																</Style.Triggers>
+															</Style>
+														</Border.Style>
+													</Border>
+													<TextBlock Text="{Binding Value}" TextTrimming="CharacterEllipsis"
+															   ToolTip="{Binding Value}"
+															   VerticalAlignment="Center" MaxWidth="150"/>
+												</DockPanel>
+											</DataTemplate>
+										</ListBox.ItemTemplate>                                        
+									</ListBox>
+								</DockPanel>-->
+							</StackPanel>
+						</GroupBox>
+					</StackPanel>
+
+				</Grid>
+
+			</ScrollViewer>		
+			
+			
+		</Border>
+	</Grid>
+</Page>

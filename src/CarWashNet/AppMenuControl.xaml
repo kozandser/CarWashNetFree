@@ -1,0 +1,127 @@
+﻿<UserControl x:Class="CarWashNet.WPF.AppMenuControl"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+             xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:local="clr-namespace:CarWashNet"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <mahapps:HamburgerMenu x:Name="HamburgerMenuControl"                               
+                               PaneBackground="#F0444444"
+                               IsPaneOpen="False"
+                               DisplayMode="CompactOverlay"                               
+                               ItemsSource="{Binding Items}"
+                               CompactPaneLength="40"
+                               HamburgerHeight="40"
+                               HamburgerWidth="40"
+                               OpenPaneLength="360"
+                               SelectedItem="{Binding SelectedItem}"
+                               Content="{Binding SelectedApp}"
+                               SelectedOptionsItem="{Binding SelectedOptionsItem}">
+            <mahapps:HamburgerMenu.HamburgerMenuTemplate>
+                <DataTemplate>
+                    <Border Width="40" Height="40" Background="#33444444">
+                        <ContentControl Width="22"
+                                    Height="22"
+                                    Content="M3,6H21V8H3V6M3,11H21V13H3V11M3,16H21V18H3V16Z"
+                                    Style="{DynamicResource PathIconContentControlStyle}"/>
+                    </Border>
+                </DataTemplate>
+            </mahapps:HamburgerMenu.HamburgerMenuTemplate>            
+            <mahapps:HamburgerMenu.ItemTemplate>
+                <DataTemplate DataType="{x:Type mahapps:HamburgerMenuItem}">
+                    <Grid MinHeight="40">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition />
+                                </Grid.ColumnDefinitions>
+                        <Grid Width="40" Height="40">
+                            <iconPacks:PackIconMaterial Foreground="White" HorizontalAlignment="Center" VerticalAlignment="Center" Width="16" Height="16">
+                            <iconPacks:PackIconMaterial.Style>
+                                <Style TargetType="iconPacks:PackIconMaterial">
+                                    <Setter Property="Kind" Value="MenuRight"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Code}" Value="A001">
+                                            <Setter Property="Kind" Value="CarWash"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A002">
+                                            <Setter Property="Kind" Value="AccountKey"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A003">
+                                            <Setter Property="Kind" Value="Worker"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A004">
+                                            <Setter Property="Kind" Value="FormatAlignLeft"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A005">
+                                            <Setter Property="Kind" Value="CurrencyRub"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A006">
+                                            <Setter Property="Kind" Value="Percent"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A007">
+                                            <Setter Property="Kind" Value="Car"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A008">
+                                            <Setter Property="Kind" Value="FormatAlignRight"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A009">
+                                            <Setter Property="Kind" Value="Car"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A010">
+                                            <Setter Property="Kind" Value="AccountCardDetails"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A011">
+                                            <Setter Property="Kind" Value="ChartBar"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Code}" Value="A012">
+                                            <Setter Property="Kind" Value="Settings"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </iconPacks:PackIconMaterial.Style>
+                        </iconPacks:PackIconMaterial>
+                            
+                        </Grid>
+                        
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="White"
+                                   Text="{Binding Caption}"
+                                   TextWrapping="Wrap"
+                                   Margin="0 4 10 4"/>
+                         <Border Grid.ColumnSpan="2" ToolTip="{Binding Caption}" Background="Transparent"/>
+                    </Grid>
+                    
+                </DataTemplate>
+            </mahapps:HamburgerMenu.ItemTemplate>
+            <mahapps:HamburgerMenu.OptionsItemTemplate>
+                <DataTemplate>
+                    <Grid MinHeight="40">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        <Grid Width="40" Height="40">
+                            <ContentControl Content="{Binding Icon}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Grid>                        
+                        <TextBlock Grid.Column="1"
+                                   VerticalAlignment="Center"
+                                   FontSize="16"
+                                   Foreground="White"
+                                   Text="{Binding Label}" />
+                    </Grid>
+                </DataTemplate>
+            </mahapps:HamburgerMenu.OptionsItemTemplate>
+            <mahapps:HamburgerMenu.OptionsItemsSource>
+                <mahapps:HamburgerMenuItemCollection>
+                    <mahapps:HamburgerMenuIconItem Icon="{iconPacks:FontAwesome Kind=CogsSolid, Width=16, Height=16}" Label="Настройки программы"/>
+                </mahapps:HamburgerMenuItemCollection>                
+            </mahapps:HamburgerMenu.OptionsItemsSource>
+        </mahapps:HamburgerMenu>
+    </Grid>
+</UserControl>

@@ -1,0 +1,84 @@
+﻿<Page x:Class="CarWashNet.View.OrderPrintPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:CarWashNet.Pages"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow" 
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="1000"
+      Title="Работники"
+      Loaded="Page_Loaded">
+    <Page.Resources>
+        
+    </Page.Resources>
+    <Grid>
+        <DockPanel>
+            <!--<ToolBarTray Style="{StaticResource ToolBarTrayStyle}">
+                <ToolBar>
+                    <Button Style="{StaticResource PrintToolBarButton}" />                    
+                </ToolBar>                
+            </ToolBarTray>-->
+            <Grid>               
+                 <!--<Viewer:CrystalReportsViewer x:Name="CrystalReportsViewer1"
+                                              ShowLogo="False"
+                                              ShowToggleSidePanelButton="False"
+                                              ShowToolbar="True"
+                                              ToggleSidePanel="None" />-->
+                <!--<FlowDocumentPageViewer >
+                    <FlowDocument x:Name="docViewer" ColumnWidth="999999" FontFamily="Segoe UI">
+                        <Paragraph>                            
+                            Выполненные работы от <TextBlock Text="{Binding Order.InTime, StringFormat=D}" FontWeight="Bold"/>
+                            <LineBreak/>
+                            Автомобиль: <Run Text="{Binding Order.Car.CarModel.Caption}" FontWeight="Bold"/>, Гос№: <Run Text="{Binding Order.Car.FedCode}" FontWeight="Bold"/>
+                            <LineBreak/>
+                            Клиент: <Run Text="{Binding Order.Client.Caption}" FontWeight="Bold"/>, Карта: <Run Text="{Binding Order.Client.Card}" FontWeight="Bold"/>                            
+                        </Paragraph>
+                        <BlockUIContainer>
+                            <ListView ItemsSource="{Binding OrderItems}"
+                                      Style="{StaticResource PrintListView}"
+                                      ItemContainerStyle="{StaticResource PrintGridViewItemStyle}">
+                                <ListView.View>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource PrintGridViewColumnHeader}">
+                                        <GridViewColumn Header="Услуга" DisplayMemberBinding="{Binding Service.Caption}" Width="200" />
+                                        <GridViewColumn Header="Кол-во" HeaderContainerStyle="{StaticResource PrintGridViewRightColumnHeader}" Width="200">
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderThickness="1" BorderBrush="Black" Margin="0">
+                                                        <TextBlock Text="{Binding Quantity}" FontFamily="Courier New" HorizontalAlignment="Right" Margin="2"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Цена" HeaderContainerStyle="{StaticResource PrintGridViewRightColumnHeader}" >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderThickness="1" BorderBrush="Black">
+                                                        <TextBlock Text="{Binding LastPrice, StringFormat=C2}" FontFamily="Courier New" HorizontalAlignment="Right" Margin="2" />                                                        
+                                                    </Border>
+                                                    
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                        <GridViewColumn Header="Сумма" HeaderContainerStyle="{StaticResource PrintGridViewRightColumnHeader}" >
+                                            <GridViewColumn.CellTemplate>
+                                                <DataTemplate>
+                                                    <Border BorderThickness="1" BorderBrush="Black">
+                                                        <TextBlock Text="{Binding LastCost, StringFormat=C2}" FontFamily="Courier New" HorizontalAlignment="Right" Margin="2"/>
+                                                    </Border>
+                                                </DataTemplate>
+                                            </GridViewColumn.CellTemplate>
+                                        </GridViewColumn>
+                                    </GridView>
+                                </ListView.View>                                
+                            </ListView>
+                        </BlockUIContainer>                        
+                    </FlowDocument>
+                </FlowDocumentPageViewer>-->                
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Page>

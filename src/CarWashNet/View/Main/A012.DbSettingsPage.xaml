@@ -1,0 +1,53 @@
+﻿<Page x:Class="CarWashNet.View.DbSettingsPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:CarWashNet.Pages"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+      xmlns:views="clr-namespace:CarWashNet.View"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="Клиенты">    
+    <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <UniformGrid HorizontalAlignment="Right" DockPanel.Dock="Bottom" Margin="0 4 0 0" Rows="1">
+            <Button Style="{DynamicResource SaveButtonStyle}" Margin="0 0 10 0" Command="{Binding Save}"/>
+            <Button Style="{DynamicResource CancelButtonStyle}" Command="{Binding Cancel}"/>
+        </UniformGrid>
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto">
+            <StackPanel>
+                <GroupBox Header="Общие">
+                    <StackPanel>                        
+                        <mahapps:NumericUpDown Value="{Binding WorkerDayPercent}" Minimum="0" Interval="5"
+                                               mahapps:TextBoxHelper.Watermark="Процент работника (дневной)"  
+                                               mahapps:TextBoxHelper.UseFloatingWatermark="True"/>
+                        <mahapps:NumericUpDown Value="{Binding WorkerNightPercent}" Minimum="0" Interval="5"
+                                               mahapps:TextBoxHelper.Watermark="Процент работника (ночной)"  
+                                               mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                                               Margin="0 4 0 0"/>
+                        <CheckBox Content="Считать выплаты работнику от суммы по услугам со скидкой"
+                                  IsChecked="{Binding WorkerPayWithDiscount}"
+                                  Margin="0 4 0 0"/>         
+                        <TextBox Text="{Binding OrganizationPrintCaption, UpdateSourceTrigger=PropertyChanged}" 
+                                 mahapps:TextBoxHelper.Watermark="Наименование организации"  
+                                 mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                                 Margin="0 4 0 0"/>
+                        <TextBox Text="{Binding OrderPrintCaption, UpdateSourceTrigger=PropertyChanged}" 
+                                 mahapps:TextBoxHelper.Watermark="Заголовок печати заказ-наряда"  
+                                 mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                                 Margin="0 4 0 0"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="Данные БД">
+                    <StackPanel>
+                        <Button Content="Загрузить тестовые данные" Command="{Binding LoadTestData}"/>
+                        <Button Content="Очистить базу данных" Command="{Binding ResetDb}" Margin="0 4 0 0"/>
+                    </StackPanel>
+                </GroupBox>
+            </StackPanel>
+        </ScrollViewer>
+    </DockPanel>
+</Page>

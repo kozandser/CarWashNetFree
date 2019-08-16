@@ -1,0 +1,60 @@
+﻿<simpleWindow:ChildWindow x:Class="CarWashNet.View.CarEditorChildWindow"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                          xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                          xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                          xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+                          xmlns:local="clr-namespace:CarWashNet.View"
+                          mc:Ignorable="d" 
+                          d:DesignHeight="450" d:DesignWidth="800"
+                          Style="{StaticResource EditorChildWindowStyle}">
+    <StackPanel Width="300">
+        <TextBox Text="{Binding EditingItem.FedCode}"
+                 mahapps:TextBoxHelper.Watermark="Гос№" mahapps:TextBoxHelper.UseFloatingWatermark="True" Margin="4"/>
+        <DockPanel Margin="4">
+            <Border DockPanel.Dock="Right"
+                            BorderBrush="{DynamicResource TextBoxBorderBrush}"
+                            BorderThickness="0 1 1 1">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource TextBoxButtonStyle}"
+                                    Content="{iconPacks:Material Kind=DotsHorizontal, Width=10}"
+                                    Command="{Binding SelectCarModel}"/>
+                            <Button Style="{StaticResource TextBoxButtonStyle}"
+                                    Content="{iconPacks:Material Kind=Close, Width=10}"
+                                    Command="{Binding ClearCarModel}"/>
+                        </StackPanel>
+                    </Border>  
+                    <TextBox Text="{Binding EditingItem.CarModel.Caption}"
+                             mahapps:TextBoxHelper.Watermark="Модель" mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                             Background="{StaticResource CloudsColorBrush}"
+                             IsReadOnly="True"/>
+                </DockPanel>
+                <DockPanel Margin="4">
+                    <Border DockPanel.Dock="Right"
+                            BorderBrush="{DynamicResource TextBoxBorderBrush}"
+                            BorderThickness="0 1 1 1">
+                        <StackPanel Orientation="Horizontal">
+                            <Button Style="{StaticResource TextBoxButtonStyle}"
+                                    Content="{iconPacks:Material Kind=DotsHorizontal, Width=10}"
+                                    Command="{Binding SelectClient}"/>
+                            <Button Style="{StaticResource TextBoxButtonStyle}"
+                                    Content="{iconPacks:Material Kind=Close, Width=10}"
+                                    Command="{Binding ClearClient}"/>
+                        </StackPanel>
+                    </Border>  
+                    <TextBox Text="{Binding EditingItem.Client.Caption}"
+                             mahapps:TextBoxHelper.Watermark="Клиент" mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                             Background="{StaticResource CloudsColorBrush}"
+                             IsReadOnly="True"/>
+                </DockPanel>
+                                  
+                <TextBox Text="{Binding EditingItem.Note}"
+                         mahapps:TextBoxHelper.Watermark="Примечание"
+                         mahapps:TextBoxHelper.UseFloatingWatermark="True" Margin="4"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         Height="200"/>
+            </StackPanel>
+</simpleWindow:ChildWindow>

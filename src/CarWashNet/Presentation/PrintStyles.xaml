@@ -1,0 +1,109 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro">
+    <!--<ResourceDictionary.MergedDictionaries>
+        <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+    </ResourceDictionary.MergedDictionaries>-->
+    
+    <Style x:Key="PrintListView" TargetType="{x:Type ListView}">
+        <Setter Property="AlternationCount" Value="2" />
+        <Setter Property="Background" Value="{DynamicResource WhiteBrush}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="BorderThickness" Value="1" />
+        <Setter Property="OverridesDefaultStyle" Value="True" />
+        <Setter Property="ScrollViewer.CanContentScroll" Value="False" />
+        <Setter Property="ScrollViewer.HorizontalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="ScrollViewer.VerticalScrollBarVisibility" Value="Hidden" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListView">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <ScrollViewer Padding="{TemplateBinding Padding}"
+                                      CanContentScroll="{TemplateBinding ScrollViewer.CanContentScroll}"
+                                      Focusable="False"
+                                      HorizontalScrollBarVisibility="{TemplateBinding ScrollViewer.HorizontalScrollBarVisibility}"
+                                      SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}"
+                                      Style="{DynamicResource MetroGridViewScrollViewerStyle}"
+                                      VerticalScrollBarVisibility="{TemplateBinding ScrollViewer.VerticalScrollBarVisibility}">
+                            <ItemsPresenter SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </ScrollViewer>
+                    </Border>                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+    </Style>
+    
+    <Style x:Key="PrintGridViewColumnHeader" TargetType="GridViewColumnHeader">        
+        <Setter Property="FontWeight" Value="SemiBold" />
+        <Setter Property="Foreground" Value="{DynamicResource TextBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Left" />
+        <Setter Property="Padding" Value="4 2 4 2" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="GridViewColumnHeader">
+                    <Grid>
+                        <Rectangle Fill="Transparent" IsHitTestVisible="False" />
+                        <Border x:Name="HeaderBorder" BorderBrush="Black" BorderThickness="0 0 0 1">
+                            <mahapps:ContentControlEx x:Name="HeaderContent"
+                                                       Margin="0 0 0 1"
+                                                       Padding="{TemplateBinding Padding}"
+                                                       HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                                       VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                                                       Content="{TemplateBinding Content}"
+                                                       ContentCharacterCasing="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=(mahapps:ControlsHelper.ContentCharacterCasing)}"
+                                                       ContentStringFormat="{TemplateBinding ContentStringFormat}"
+                                                       ContentTemplate="{TemplateBinding ContentTemplate}"
+                                                       ContentTemplateSelector="{TemplateBinding ContentTemplateSelector}"
+                                                       RecognizesAccessKey="True"
+                                                       SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                        </Border>
+                    </Grid>                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />        
+    </Style>
+    <Style x:Key="PrintGridViewRightColumnHeader" TargetType="GridViewColumnHeader" BasedOn="{StaticResource PrintGridViewColumnHeader}">        
+        <Setter Property="HorizontalContentAlignment" Value="Right" />        
+    </Style>
+    
+    <Style x:Key="PrintGridViewItemStyle" TargetType="{x:Type ListViewItem}">
+        <Setter Property="BorderBrush" Value="{DynamicResource GrayBrush1}" />
+        <Setter Property="BorderThickness" Value="1"/>
+        <Setter Property="Foreground" Value="{DynamicResource BlackBrush}" />
+        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        <Setter Property="IsTabStop" Value="False" />
+        <Setter Property="Margin" Value="0" />
+        <Setter Property="MinHeight" Value="25" />
+        <Setter Property="SnapsToDevicePixels" Value="True" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type ListViewItem}">
+                    <Border x:Name="Border"
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}">
+                        <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}" SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                    </Border>                    
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Setter Property="VerticalContentAlignment" Value="Center" />
+        <Style.Triggers>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="0">
+                <Setter Property="Background" Value="{DynamicResource AlternateRow1BackgroundBrush}" />
+            </Trigger>
+            <Trigger Property="ItemsControl.AlternationIndex" Value="1">
+                <Setter Property="Background" Value="{DynamicResource AlternateRow2BackgroundBrush}" />
+                <Setter Property="Border.BorderThickness" Value="0 1 0 1" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+</ResourceDictionary>

@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/12/2016 09:39:34" ReportInfo.Modified="07/20/2018 14:39:18" ReportInfo.CreatorVersion="2016.2.17.0">
+  <Dictionary>
+    <Total Name="Total" TotalType="Count" Evaluator="Data1" PrintOn="DataFooter1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" Guides="0,718.2,66.15,132.3,302.4,453.6,567">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="94.5" Guides="9.45,94.5,66.15,66.15,94.5,66.15">
+      <TextObject Name="Text1" Top="37.8" Width="718.2" Height="28.35" Text="[PricelistCaption]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt"/>
+      <TextObject Name="Text4" Top="66.15" Width="718.2" Height="18.9" Text="Дата прайслиста: &lt;b&gt;[PLDate]&lt;/b&gt;" HorzAlign="Right" WordWrap="false" HtmlTags="true"/>
+      <TextObject Name="Text28" Top="9.45" Width="718.2" Height="28.35" Text="[OrganizationPrintCaption]" VertAlign="Center" Font="Arial, 12pt"/>
+    </ReportTitleBand>
+    <ColumnHeaderBand Name="ColumnHeader1" Top="97.28" Width="718.2" Height="37.8" Guides="0,37.8">
+      <TextObject Name="Text9" Width="491.4" Height="37.8" Border.Lines="All" Text="Услуга" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text20" Left="491.4" Width="226.8" Height="37.8" Border.Lines="All" Text="Цена" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ColumnHeaderBand>
+    <DataBand Name="Data1" Top="137.86" Width="718.2" Height="26.46" CanGrow="true" CanShrink="true" Guides="0,37.8,18.9">
+      <TextObject Name="Text25" Left="491.4" Width="226.8" Height="26.46" Border.Lines="All" Border.Color="Gray" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.Price]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <TextObject Name="Text11" Width="491.4" Height="26.46" Border.Lines="All" Border.Color="Gray" CanGrow="true" Text="[D1.Service.Caption]" VertAlign="Center"/>
+      <DataFooterBand Name="DataFooter1" Top="167.09" Width="718.2" Height="26.46" Guides="0,18.9">
+        <TextObject Name="Text13" Width="718.2" Height="26.46" Border.Lines="All" Text="Кол-во услуг: [Total]" VertAlign="Center" Font="Courier New, 10pt, style=Bold"/>
+      </DataFooterBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="196.33" Width="718.2" Height="103.95"/>
+  </ReportPage>
+</Report>

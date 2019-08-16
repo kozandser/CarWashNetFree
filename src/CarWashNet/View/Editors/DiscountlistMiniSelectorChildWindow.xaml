@@ -1,0 +1,45 @@
+﻿<simpleWindow:ChildWindow x:Class="CarWashNet.View.DiscountlistMiniSelectorChildWindow"
+                          xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+                          xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+                          xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                          xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                          xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+                          xmlns:local="clr-namespace:CarWashNet.View"
+                          mc:Ignorable="d" 
+                          d:DesignHeight="450" d:DesignWidth="800"
+                          OverlayBrush="#AA7F7F7F"
+                          IsOpen="{Binding IsOpen}">
+    <DockPanel Margin="10" MinHeight="300">
+        <Grid Margin="10 0 10 10"
+              DockPanel.Dock="Bottom">
+            <UniformGrid HorizontalAlignment="Right" DockPanel.Dock="Bottom" Margin="0 10 0 0" Rows="1">
+                <Button Style="{DynamicResource SaveButtonStyle}" Margin="0 0 10 0" Command="{Binding Select}"/>
+                <Button Style="{DynamicResource CancelButtonStyle}" Command="{Binding Cancel}"/>
+            </UniformGrid>
+        </Grid>
+        <DataGrid ItemsSource="{Binding Items}"                          
+                  SelectedItem="{Binding SelectedItem}"
+                  Width="200" HeadersVisibility="None">
+            <DataGrid.InputBindings>
+                <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Select}"/>
+            </DataGrid.InputBindings>
+            <DataGrid.Columns>
+                <DataGridTemplateColumn Header="Скидка" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel>
+                                <TextBlock Text="{Binding Caption}"/>
+                                <TextBlock FontSize="10" Foreground="{DynamicResource ConcreteColorBrush}">
+                                    <Run  Text="{Binding Group}"/>
+                                    <Run Text="{Binding Date, Mode=OneWay, StringFormat=dd.MM.yyyy}"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </DockPanel>
+</simpleWindow:ChildWindow>

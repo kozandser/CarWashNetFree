@@ -1,0 +1,260 @@
+﻿<Page x:Class="CarWashNet.View.OrdersPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
+      xmlns:local="clr-namespace:CarWashNet.Pages"
+      xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+      xmlns:simpleWindow="clr-namespace:MahApps.Metro.SimpleChildWindow;assembly=MahApps.Metro.SimpleChildWindow"
+      mc:Ignorable="d" 
+      d:DesignHeight="400" d:DesignWidth="600"
+      Title="Работники">
+    <Page.Resources>
+        <CompositeCollection x:Key="common" x:Shared="False">
+            <MenuItem Style="{StaticResource LoadItemsMenuItem}" />
+            <Separator/>
+            <MenuItem Style="{StaticResource AddMenuItem}" />
+            <MenuItem Style="{StaticResource EditMenuItem}" />
+        </CompositeCollection>
+        <CompositeCollection x:Key="misc" x:Shared="False">            
+            <MenuItem Style="{StaticResource ReadyMenuItem}" Header="Закрыть заезд"/>
+            <MenuItem Style="{StaticResource UnreadyMenuItem}" Header="Открыть заезд"/>
+            <MenuItem Style="{StaticResource DeleteMenuItem}"/>
+            <Separator/>
+            <MenuItem Style="{StaticResource PrintMenuItem}" Header="Печать для клиента"/>
+        </CompositeCollection>
+    </Page.Resources>
+    <Grid>
+        <Popup x:Name="DaySummary"
+               Placement="Mouse"
+               StaysOpen="False"
+               AllowsTransparency="True"
+               DataContext="{Binding DaySummaryViewModel}"
+               IsOpen="{Binding IsOpen}">
+            <Border BorderBrush="Black"
+                    BorderThickness="1"
+                    Background="White">
+                <DockPanel Margin="5">
+                    <TextBlock DockPanel.Dock="Top" Text="{Binding Date, StringFormat=dd MMMM yyyy}" FontWeight="Bold"/>
+                    <Separator DockPanel.Dock="Top"/>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <TextBlock Text="Мойщик" Width="100" FontWeight="Bold"/>
+                        <TextBlock Text="Колво заездов" Width="100" FontWeight="Bold"/>
+                        <TextBlock Text="Сумма заездов" Width="100" FontWeight="Bold"/>
+                        <TextBlock Text="Выплата" Width="100" FontWeight="Bold"/>
+                    </StackPanel>
+                    <Separator DockPanel.Dock="Top"/>
+                    <ItemsControl DockPanel.Dock="Top" ItemsSource="{Binding Items}">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="{Binding Worker}" Width="100"/>
+                                    <TextBlock Text="{Binding OrderCount}" Width="100"/>
+                                    <TextBlock Text="{Binding Cost, StringFormat=C2}" Width="100"/>
+                                    <TextBlock Text="{Binding Pay, StringFormat=C2}" Width="100"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    <Separator DockPanel.Dock="Top"/>
+                    <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                        <TextBlock Text="{Binding Worker}" Width="100" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding OrderCount}" Width="100" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Cost, StringFormat=C2}" Width="100" FontWeight="Bold"/>
+                        <TextBlock Text="{Binding Pay, StringFormat=C2}" Width="100" FontWeight="Bold"/>
+                    </StackPanel>
+                    <Grid/>
+                </DockPanel>
+            </Border>
+        </Popup>
+        <DockPanel>
+            <ToolBarTray Style="{StaticResource ToolBarTrayStyle}">
+                <ToolBar>
+                    <Button Style="{StaticResource LoadItemsToolBarButton}" />
+                    <Button Style="{StaticResource AddToolBarButton}"/>
+                    <Button Style="{StaticResource EditToolBarButton}"/>                     
+                    <mahapps:DropDownButton Style="{StaticResource ToolBarDropDownButtonStyle}" Icon="{iconPacks:Material Kind=Menu}">
+                        <mahapps:DropDownButton.ItemsSource>
+                            <CompositeCollection>
+                                <CollectionContainer Collection="{StaticResource misc}" />
+                            </CompositeCollection>
+                        </mahapps:DropDownButton.ItemsSource>
+                    </mahapps:DropDownButton>
+                </ToolBar>
+                <ToolBar Band="1">
+                    <TextBlock Text="От" VerticalAlignment="Center"/>
+                    <mahapps:DateTimePicker VerticalAlignment="Center" SelectedDate="{Binding PeriodFilter.StartDate}" IsEnabled="{Binding PeriodFilter.IsManualPeriod}" Margin="4 0 0 0"/>
+                    <TextBlock Text="до" VerticalAlignment="Center"  Margin="4 0 0 0"/>
+                    <mahapps:DateTimePicker VerticalAlignment="Center" SelectedDate="{Binding PeriodFilter.EndDate}" IsEnabled="{Binding PeriodFilter.IsManualPeriod}" Margin="4 0 0 0"/>
+                    <ComboBox  Margin="4 0 4 0" Width="150"
+                           ItemsSource="{Binding PeriodFilter.Periods}"
+                           DisplayMemberPath="Caption"
+                           SelectedItem="{Binding PeriodFilter.SelectedPeriod}"
+                           VerticalAlignment="Center">
+                        <ComboBox.ItemContainerStyle>
+                            <Style TargetType="{x:Type ComboBoxItem}">
+                                <Setter Property="IsEnabled" Value="{Binding IsActive}"/>
+                            </Style>
+                        </ComboBox.ItemContainerStyle>
+                    </ComboBox>                                        
+                </ToolBar>
+                <!--<ToolBar>                    
+                    <DatePicker SelectedDate="{Binding MainDate}" VerticalAlignment="Center" Width="120"
+                                mahapps:TextBoxHelper.Watermark="Показать заказы"/>
+                    <CheckBox Content="Пред. 3 дня" ToolTip="Показывать предыдущие 3 дня" Margin="5 0 0 0" IsChecked="{Binding IsPreviousDays}"
+                              Style="{StaticResource MetroCheckBox}"/> 
+                </ToolBar>-->
+                
+            </ToolBarTray>
+            <Grid>
+                <DataGrid Margin="0 0 4 0"
+                          ItemsSource="{Binding Items}"
+                          SelectedItem="{Binding SelectedItem}">
+                    <DataGrid.InputBindings>
+                        <MouseBinding Gesture="LeftDoubleClick" Command="{Binding Edit}"/>
+                    </DataGrid.InputBindings>
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <ContextMenu.ItemsSource>
+                                <CompositeCollection>
+                                    <CollectionContainer Collection="{StaticResource common}" />
+                                    <Separator/>
+                                    <CollectionContainer Collection="{StaticResource misc}" />
+                                </CompositeCollection>
+                            </ContextMenu.ItemsSource>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                    <DataGrid.GroupStyle>
+                    <GroupStyle>
+                        <GroupStyle.HeaderTemplate>
+                            <DataTemplate>
+                                <Border Background="{StaticResource NephritisColorBrush}">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Margin="4" Foreground="White" FontWeight="Bold" FontSize="14"  Text="{Binding Name, Mode=OneWay, StringFormat=dd MMMM yyyy}"/>
+                                        <TextBlock Margin="4" Foreground="White" FontWeight="Bold" FontSize="14" >                                                
+                                            <Run Text="| Кол-во:"/>
+                                            <Run Text="{Binding Items.Count, Mode=OneWay}"/>
+                                        </TextBlock>
+                                        <Button Style="{StaticResource LightButtonStyle}"
+                                                Content="{iconPacks:Material Kind=Sigma, Width=15, Height=15}"
+                                                ToolTip="Итоги"
+                                                Foreground="White"
+                                                Tag="{Binding Name, Mode=OneWay}"
+                                                Command="{Binding DataContext.ShowDaySummary, RelativeSource={RelativeSource AncestorType=DataGrid}}"
+                                                CommandParameter="{Binding Name, Mode=OneWay}"/>
+                                    </StackPanel>
+
+                                </Border>
+
+                            </DataTemplate>
+                        </GroupStyle.HeaderTemplate>
+                    </GroupStyle>
+                </DataGrid.GroupStyle>
+                    <DataGrid.Columns>     
+                        <DataGridTemplateColumn Width="50" MaxWidth="50" MinWidth="50" SortMemberPath="IsSelected" >
+                            <DataGridTemplateColumn.HeaderTemplate>
+                                <DataTemplate>
+                                    <CheckBox VerticalAlignment="Center"
+                                              x:Name="sel"
+                                              IsChecked="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.IsMultiSelect, Mode=OneWay}"
+                                              Command="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.SwitchSelection}"
+                                              CommandParameter="{Binding RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}, Path=DataContext.IsMultiSelect, Mode=OneWay}"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.HeaderTemplate>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <CheckBox IsChecked="{Binding IsSelected, UpdateSourceTrigger=PropertyChanged}" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="9 0 0 0"/>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn>
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel Orientation="Horizontal" Margin="4 0 4 0">
+                                        <Button Style="{StaticResource OrderReadyButton}" Width="25" Height="25"/>
+                                        <StackPanel Margin="4 0 0 0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding InTime, StringFormat=HH:mm}" ToolTip="Время заезда" FontFamily="Courier New"/>
+                                            <TextBlock Text="{Binding OutTime, StringFormat=HH:mm}" ToolTip="Время выезда" FontFamily="Courier New"/>
+                                        </StackPanel>
+                                        <iconPacks:PackIconMaterial Margin="4 0 0 0" VerticalAlignment="Center">
+                                            <iconPacks:PackIconMaterial.Style>
+                                                <Style TargetType="iconPacks:PackIconMaterial">
+                                                    <Setter Property="Kind" Value="WeatherSunny"/>
+                                                    <Setter Property="Foreground" Value="{StaticResource OrangeColorBrush}"/>
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding IsNight}" Value="True">
+                                                            <Setter Property="Kind" Value="WeatherNight"/>
+                                                            <Setter Property="Foreground" Value="{StaticResource BelizeHoleColorBrush}"/>
+                                                        </DataTrigger>                                                        
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </iconPacks:PackIconMaterial.Style>
+                                        </iconPacks:PackIconMaterial>
+                                    </StackPanel>                                  
+                                    
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        
+                        
+                        <DataGridTemplateColumn Header="Машина">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Center" Margin="5">
+                                        <TextBlock FontSize="16" Text="{Binding Car.FedCode}" />
+                                        <TextBlock FontSize="12" Opacity=".8" Text="{Binding Car.CarModel.Caption}"/>                                    
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Клиент">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Center" Margin="5">
+                                        <TextBlock FontSize="16" Text="{Binding Client.Caption}" />
+                                        <TextBlock FontSize="12" Opacity=".8">
+                                            <Run Text="{Binding Client.Card}"/>
+                                            <Run Text="{Binding Client.Phone}"/>
+                                        </TextBlock>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Скидка">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Center" Margin="5">
+                                        <TextBlock FontSize="16" Text="{Binding Discountlist.Caption}" />
+                                        <TextBlock FontSize="12" Opacity=".8" Text="{Binding Discountlist.Date, StringFormat=dd.MM.yyyy}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Сумма">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Center" Margin="5">
+                                        <TextBlock FontSize="16" Text="{Binding LastCost, StringFormat=C2}" />
+                                        <TextBlock FontSize="12" Opacity=".8" Text="{Binding WorkerPay, StringFormat=C2, TargetNullValue='---' }" ToolTip="Выплата мойщику"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                        <DataGridTemplateColumn Header="Работники">
+                            <DataGridTemplateColumn.CellTemplate>
+                                <DataTemplate>
+                                    <StackPanel VerticalAlignment="Center" Margin="5">
+                                        <TextBlock FontSize="16" Text="{Binding Worker.Caption, FallbackValue='---'}" />
+                                        <TextBlock FontSize="12" Opacity=".8" Text="{Binding User.Caption}"/>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </DataGridTemplateColumn.CellTemplate>
+                        </DataGridTemplateColumn>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </DockPanel>
+    </Grid>
+</Page>

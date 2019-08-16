@@ -1,0 +1,102 @@
+﻿<mahapps:MetroWindow x:Class="CarWashNet.WPF.MainWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+                     xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                     xmlns:Dialog="clr-namespace:MahApps.Metro.Controls.Dialogs;assembly=MahApps.Metro"
+                     xmlns:klibnative="clr-namespace:KLib.Native;assembly=KLib.Native"
+                     mc:Ignorable="d"                     
+                     Style="{StaticResource DefaultWindowStyle}"
+                     WindowStartupLocation="CenterScreen"
+                     WindowState="Maximized"
+                     Title="Автомойка и шиномонтаж"
+                     Height="800" Width="1000"                     
+                     ShowDialogsOverTitleBar="False"
+                     Dialog:DialogParticipation.Register="{Binding}"
+                     Closing="MetroWindow_ClosingAsync"
+                     Closed="MetroWindow_Closed">    
+    <mahapps:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <iconPacks:PackIconMaterial Kind="CarWash"
+                                        Width="{TemplateBinding Width}"
+                                        Height="{TemplateBinding Height}"
+                                        Margin="6"
+                                        Foreground="White"/>            
+        </DataTemplate>
+    </mahapps:MetroWindow.IconTemplate>
+    <mahapps:MetroWindow.Resources>                      
+        <Dialog:CustomDialog x:Key="LoginDialog"
+                             Title="Вход"
+                             DataContext="{Binding }">
+            <StackPanel Width="250" HorizontalAlignment="Left">
+                <ComboBox mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                          mahapps:TextBoxHelper.Watermark="Пользователь" Margin="4"
+                          ItemsSource="{Binding Users}"
+                          DisplayMemberPath="Caption"
+                          SelectedItem="{Binding SelectedUser}"/>
+                <PasswordBox mahapps:TextBoxHelper.UseFloatingWatermark="True"
+                             mahapps:TextBoxHelper.Watermark="Пароль" Margin="4"
+                             x:Name="tbPassword"
+                             mahapps:PasswordBoxHelper.CapsLockWarningToolTip="Нажата CapsLock"
+                             KeyDown="tbPassword_KeyDown" PasswordChanged="tbPassword_PasswordChanged"
+                             >                        
+                </PasswordBox>
+                <TextBlock Text="Неверный пароль" Foreground="White" Background="Red"
+                           Visibility="{Binding WrongPassword, Converter={klibnative:BoolToVisibilityConverter}}"
+                           Padding="2" Margin="4 0 4 0" />
+                <CheckBox Content="Запомнить пароль" IsChecked="{Binding HasSavedUserPassword}" Margin="4"/>
+                
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Войти"   Margin="4 4 4 10"
+                            Height="35"
+                            MinWidth="80"
+                            Click="Login_Click"/>
+                    <Button Content="Выити из программы" HorizontalAlignment="Right"  Margin="4 4 4 10"
+                            Height="35"
+                            MinWidth="80"
+                            Click="Close_Click"/>
+                </StackPanel>
+            </StackPanel>
+        </Dialog:CustomDialog>
+    </mahapps:MetroWindow.Resources>
+    <Grid>
+        <DockPanel>
+            <StatusBar DockPanel.Dock="Bottom">
+                <StatusBarItem DockPanel.Dock="Right" >
+                    <TextBlock Foreground="White" HorizontalAlignment="Right">
+                        <Run Text="Версия:"/>
+                        <Run Text="{Binding AppVersion}" FontWeight="Bold"/>
+                    </TextBlock>
+                </StatusBarItem>
+                <StatusBarItem DockPanel.Dock="Right" >
+                    <TextBlock Foreground="White" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+                        <Run Text="Версия БД: "/>
+                        <Run Text="{Binding DbVersion}" FontWeight="Bold"/>
+                    </TextBlock>
+                </StatusBarItem>
+                <StatusBarItem DockPanel.Dock="Right" >
+                    <TextBlock Foreground="White" HorizontalAlignment="Right" DockPanel.Dock="Bottom">
+                        <Run Text="Пользователь: "/>
+                        <Hyperlink Foreground="#FFDDECFB" Command="{Binding Logout}">
+                            <Run Text="{Binding CurrentUserName, Mode=OneWay}" FontWeight="Bold" ToolTip="Сменить пользователя"/>
+                        </Hyperlink>
+                    </TextBlock>
+                </StatusBarItem>
+                <StatusBarItem mahapps:VisibilityHelper.IsVisible="{Binding Updater.HasNewVersion, Mode=OneWay}">
+                    <TextBlock FontWeight="Bold" Margin="0 2 0 0">
+                        <Hyperlink NavigateUri="{Binding Updater.UpdaterData.Link}"
+                                   ToolTip="{Binding Updater.UpdaterData.Description}"
+                                   Foreground="#FFCDD2"
+                                   Command="{Binding Updater.OpenLinkInBrowser}">Есть новая версия!</Hyperlink>
+                    </TextBlock>                    
+                </StatusBarItem>
+                <StatusBarItem/>
+            </StatusBar>
+            <ContentControl x:Name="ContentGrid"/>
+        </DockPanel>
+        
+    </Grid>
+</mahapps:MetroWindow>

@@ -1,0 +1,46 @@
+﻿<mahapps:MetroWindow x:Class="CarWashNet.WPF.SplashWindow"
+                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                     xmlns:mahapps="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+                     xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+                     xmlns:local="clr-namespace:CarWashNet.View"
+                     mc:Ignorable="d"
+                     Title="Автомойка и шиномонтаж"
+                     Height="300" Width="500"
+                     Loaded="MetroWindow_LoadedAsync"
+                     ShowCloseButton="True"
+                     ShowMaxRestoreButton="False" ResizeMode="NoResize" ShowMinButton="False" ShowSystemMenuOnRightClick="False" WindowStartupLocation="CenterScreen"
+                     Background="{DynamicResource BelizeHoleColorBrush}"
+                     WindowTitleBrush="{DynamicResource BelizeHoleColorBrush}" BorderThickness="0">
+    <mahapps:MetroWindow.IconTemplate>
+        <DataTemplate>
+            <iconPacks:PackIconMaterial Kind="CarWash"
+                                        Width="{TemplateBinding Width}"
+                                        Height="{TemplateBinding Height}"
+                                        Margin="6"
+                                        Foreground="White"/>            
+        </DataTemplate>
+    </mahapps:MetroWindow.IconTemplate>
+    <Grid Margin="20" >
+        <Grid.RowDefinitions>            
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>        
+        <iconPacks:PackIconMaterial Kind="CarWash"
+                                    HorizontalAlignment="Center"
+                                    VerticalAlignment="Center"
+                                    Width="150" Height="150"
+                                    Margin="6"
+                                    Foreground="White"
+                                    Grid.Row="0"/>         
+        <TextBlock Text="Автомойка и шиномонтаж" FontSize="30" Foreground="White" Grid.Row="1" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" Grid.Row="2" HorizontalAlignment="Center">
+            <mahapps:ProgressRing Width="20" Height="20" Margin=" 0 0 10 0" Foreground="{DynamicResource SilverColorBrush}"/>
+            <TextBlock Text="ASfdsdf sdf sf...." FontSize="15" x:Name="message" Foreground="{DynamicResource SilverColorBrush}" VerticalAlignment="Center"/>
+        </StackPanel>
+        
+    </Grid>
+</mahapps:MetroWindow>

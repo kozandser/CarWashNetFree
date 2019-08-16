@@ -1,0 +1,53 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Report ScriptLanguage="CSharp" ReportInfo.Created="10/12/2016 09:39:34" ReportInfo.Modified="07/20/2018 11:21:06" ReportInfo.CreatorVersion="2016.2.17.0">
+  <Dictionary>
+    <Parameter Name="InTime" DataType="System.DateTime"/>
+    <Parameter Name="OutTime" DataType="System.DateTime"/>
+    <Parameter Name="CarModel" DataType="System.String"/>
+    <Parameter Name="FedCode" DataType="System.String"/>
+    <Parameter Name="ClientCaption" DataType="System.String"/>
+    <Parameter Name="ClientCard" DataType="System.String"/>
+    <Total Name="Total" TotalType="Count" Evaluator="Data1" PrintOn="DataFooter1"/>
+    <Total Name="TotalCost" Expression="[D1.LastCost]" Evaluator="Data1"/>
+  </Dictionary>
+  <ReportPage Name="Page1" RawPaperSize="9" Guides="0,718.2,66.15,132.3,302.4,453.6,567">
+    <ReportTitleBand Name="ReportTitle1" Width="718.2" Height="189" Guides="9.45,94.5,66.15,66.15,94.5,66.15">
+      <TextObject Name="Text1" Top="37.8" Width="718.2" Height="28.35" Text="[OrderPrintCaption]" HorzAlign="Center" VertAlign="Center" Font="Arial, 14pt"/>
+      <TextObject Name="Text15" Top="85.05" Width="718.2" Height="103.95" Text="Автомобиль: &lt;b&gt;[CarModel]&lt;/b&gt;, Гос№: &lt;b&gt;[FedCode]&lt;/b&gt;&#13;&#10;Время заезда: &lt;b&gt;[InTime]&lt;/b&gt;&#13;&#10;Время выезда: &lt;b&gt;[OutTime]&lt;/b&gt;&#13;&#10;Клиент: &lt;b&gt;[ClientCaption]&lt;/b&gt;, Карта: &lt;b&gt;[ClientCard]&lt;/b&gt;&#13;&#10;Менеджер: &lt;b&gt;[User]&lt;/b&gt;, Работник: &lt;b&gt;[Worker]&lt;/b&gt;" Font="Arial, 12pt" HtmlTags="true">
+        <Formats>
+          <GeneralFormat/>
+          <GeneralFormat/>
+          <DateFormat Format="f"/>
+          <DateFormat Format="f"/>
+          <GeneralFormat/>
+          <GeneralFormat/>
+        </Formats>
+      </TextObject>
+      <TextObject Name="Text4" Top="66.15" Width="718.2" Height="18.9" Text="Дата печати: &lt;b&gt;[Date]&lt;/b&gt;" HorzAlign="Right" WordWrap="false" HtmlTags="true"/>
+      <TextObject Name="Text28" Top="9.45" Width="718.2" Height="28.35" Text="[OrganizationPrintCaption]" VertAlign="Center" Font="Arial, 12pt"/>
+    </ReportTitleBand>
+    <ColumnHeaderBand Name="ColumnHeader1" Top="193" Width="718.2" Height="37.8" Guides="0,37.8">
+      <TextObject Name="Text9" Width="264.6" Height="37.8" Border.Lines="All" Text="Услуга" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text7" Left="642.6" Width="75.6" Height="37.8" Border.Lines="All" Text="Сумма со скидкой" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text16" Left="567" Width="75.6" Height="37.8" Border.Lines="All" Text="Сумма" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text18" Left="491.4" Width="75.6" Height="37.8" Border.Lines="All" Text="Скидка" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text20" Left="415.8" Width="75.6" Height="37.8" Border.Lines="All" Text="Цена со скидкой" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text21" Left="340.2" Width="75.6" Height="37.8" Border.Lines="All" Text="Цена без скидки" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+      <TextObject Name="Text22" Left="264.6" Width="75.6" Height="37.8" Border.Lines="All" Text="Кол-во" HorzAlign="Center" VertAlign="Center" Font="Arial, 10pt, style=Bold"/>
+    </ColumnHeaderBand>
+    <DataBand Name="Data1" Top="234.8" Width="718.2" Height="26.46" CanGrow="true" CanShrink="true" Guides="0,37.8,18.9">
+      <TextObject Name="Text11" Width="264.6" Height="26.46" Border.Lines="All" CanGrow="true" Text="[D1.ServiceCaption]" VertAlign="Center"/>
+      <TextObject Name="Text8" Left="642.6" Width="75.6" Height="26.46" Border.Lines="All" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.LastCost]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <TextObject Name="Text17" Left="567" Width="75.6" Height="26.46" Border.Lines="All" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.Cost]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <TextObject Name="Text19" Left="491.4" Width="75.6" Height="26.46" Border.Lines="All" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.Discount]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <TextObject Name="Text23" Left="264.6" Width="75.6" Height="26.46" Border.Lines="All" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.Quantity]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <TextObject Name="Text24" Left="340.2" Width="75.6" Height="26.46" Border.Lines="All" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.Price]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <TextObject Name="Text25" Left="415.8" Width="75.6" Height="26.46" Border.Lines="All" CanGrow="true" CanShrink="true" GrowToBottom="true" Text="[D1.LastPrice]" Format="Number" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt"/>
+      <DataFooterBand Name="DataFooter1" Top="265.26" Width="718.2" Height="26.46" Guides="0,18.9">
+        <TextObject Name="Text13" Width="264.6" Height="26.46" Border.Lines="All" Text="Кол-во услуг: [Total]" VertAlign="Center" Font="Courier New, 10pt, style=Bold"/>
+        <TextObject Name="Text26" Left="491.4" Width="226.8" Height="26.46" Border.Lines="All" CanGrow="true" Text="Итого: [TotalCost]" Format="Currency" Format.UseLocale="true" HorzAlign="Right" VertAlign="Center" WordWrap="false" Font="Courier New, 10pt, style=Bold"/>
+      </DataFooterBand>
+    </DataBand>
+    <PageFooterBand Name="PageFooter1" Top="295.72" Width="718.2" Height="103.95"/>
+  </ReportPage>
+</Report>

@@ -1,0 +1,186 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReactiveUI.WPF</name>
+    </assembly>
+    <members>
+        <member name="T:ReactiveUI.TransitioningContentControl">
+            <summary>
+            A ContentControl that animates the transition when its content is changed.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> for the <see cref="P:ReactiveUI.TransitioningContentControl.Transition"/> property.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionPartProperty">
+            <summary>
+            <see cref="T:System.Windows.DependencyProperty"/> for the <see cref="P:ReactiveUI.TransitioningContentControl.TransitionPart"/> property.
+            </summary>
+        </member>
+        <member name="M:ReactiveUI.TransitioningContentControl.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:ReactiveUI.TransitioningContentControl"/> class.
+            </summary>
+        </member>
+        <member name="E:ReactiveUI.TransitioningContentControl.TransitionCompleted">
+            <summary>
+            Occurs when a transition has completed.
+            </summary>
+        </member>
+        <member name="E:ReactiveUI.TransitioningContentControl.TransitionStarted">
+            <summary>
+            Occurs when a transition has started.
+            </summary>
+        </member>
+        <member name="T:ReactiveUI.TransitioningContentControl.TransitionType">
+            <summary>
+            Represents the type of transition that a TransitioningContentControl will perform.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionType.Fade">
+            <summary>
+            A simple fading transition.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionType.FadeDown">
+            <summary>
+            A transition that fades the new element in from the top.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionType.SlideLeft">
+            <summary>
+            A transition that slides old content left and out of view, then slides new content back in from the same direction.
+            </summary>
+        </member>
+        <member name="T:ReactiveUI.TransitioningContentControl.TransitionPartType">
+            <summary>
+            Represents the part of the transition that the developer would like the TransitioningContentControl to perform
+            </summary>
+            <remarks>This only applies to certain TransitionTypes. An InvalidOperationException will be thrown if the TransitionType does not support the TransitionPartType. Default is OutIn.</remarks>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionPartType.Out">
+            <summary>
+            Transitions out only.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionPartType.In">
+            <summary>
+            Transitions in only.
+            </summary>
+        </member>
+        <member name="F:ReactiveUI.TransitioningContentControl.TransitionPartType.OutIn">
+            <summary>
+            Transitions in and out.
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.TransitioningContentControl.Transition">
+            <summary>
+            Gets or sets the transition.
+            </summary>
+            <value>The transition.</value>
+        </member>
+        <member name="P:ReactiveUI.TransitioningContentControl.TransitionPart">
+            <summary>
+            Gets or sets the transition part.
+            </summary>
+            <value>The transition part.</value>
+        </member>
+        <member name="M:ReactiveUI.TransitioningContentControl.OnContentChanged(System.Object,System.Object)">
+            <summary>
+            Called when the value of the <see cref="P:System.Windows.Controls.ContentControl.Content"/> property changes.
+            </summary>
+            <param name="oldContent">The old value of the <see cref="P:System.Windows.Controls.ContentControl.Content"/> property.</param>
+            <param name="newContent">The new value of the <see cref="P:System.Windows.Controls.ContentControl.Content"/> property.</param>
+        </member>
+        <member name="M:ReactiveUI.TransitioningContentControl.AbortTransition">
+            <summary>
+            Aborts the transition.
+            </summary>
+        </member>
+        <member name="M:ReactiveUI.TransitioningContentControl.SetTransitionDefaultValues">
+            <summary>
+            Sets default values for certain transition types.
+            </summary>
+        </member>
+        <member name="T:ReactiveUI.AutoDataTemplateBindingHook">
+            <summary>
+            AutoDataTemplateBindingHook is a binding hook that checks ItemsControls
+            that don't have DataTemplates, and assigns a default DataTemplate that
+            loads the View associated with each ViewModel.
+            </summary>
+        </member>
+        <member name="T:ReactiveUI.BooleanToVisibilityTypeConverter">
+            <summary>
+            This type convert converts between Boolean and XAML Visibility - the 
+            conversionHint is a BooleanToVisibilityHint
+            </summary>
+        </member>
+        <member name="T:ReactiveUI.ReactiveUserControl`1">
+            <summary>
+            A <see cref="T:System.Windows.Controls.UserControl"/> that is reactive.
+            </summary>
+            <remarks>
+            <para>
+            This class is a <see cref="T:System.Windows.Controls.UserControl"/> that is also reactive. That is, it implements <see cref="T:ReactiveUI.IViewFor`1"/>.
+            You can extend this class to get an implementation of <see cref="T:ReactiveUI.IViewFor`1"/> rather than writing one yourself.
+            </para>
+            <para>
+            Note that the XAML for your control must specify the same base class, including the generic argument you provide for your view
+            model. To do this, use the <c>TypeArguments</c> attribute as follows:
+            <code>
+            <![CDATA[
+            <rxui:ReactiveUserControl
+                    x:Class="views:YourView"
+                    x:TypeArguments="vms:YourViewModel"
+                    xmlns:rxui="http://reactiveui.net"
+                    xmlns:views="clr-namespace:Foo.Bar.Views"
+                    xmlns:vms="clr-namespace:Foo.Bar.ViewModels">
+                <!-- view XAML here -->
+            </rxui:ReactiveUserControl>
+            ]]>
+            </code>
+            </para>
+            </remarks>
+            <typeparam name="TViewModel">
+            The type of the view model backing the view.
+            </typeparam>
+        </member>
+        <member name="T:ReactiveUI.RoutedViewHost">
+            <summary>
+            This control hosts the View associated with a Router, and will display
+            the View and wire up the ViewModel whenever a new ViewModel is
+            navigated to. Put this control as the only control in your Window.
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.RoutedViewHost.Router">
+            <summary>
+            The Router associated with this View Host.
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.RoutedViewHost.DefaultContent">
+            <summary>
+            This content is displayed whenever there is no page currently
+            routed.
+            </summary>
+        </member>
+        <member name="T:ReactiveUI.ViewModelViewHost">
+            <summary>
+            This content control will automatically load the View associated with
+            the ViewModel property and display it. This control is very useful
+            inside a DataTemplate to display the View associated with a ViewModel.
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.ViewModelViewHost.ViewModel">
+            <summary>
+            The ViewModel to display
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.ViewModelViewHost.DefaultContent">
+            <summary>
+            If no ViewModel is displayed, this content (i.e. a control) will be displayed.
+            </summary>
+        </member>
+    </members>
+</doc>

@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReactiveUI.Fody.Helpers</name>
+    </assembly>
+    <members>
+        <member name="P:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute.Target">
+            <summary>
+            The name of the backing property
+            </summary>
+        </member>
+        <member name="P:ReactiveUI.Fody.Helpers.ReactiveDependencyAttribute.TargetProperty">
+            <summary>
+            Target property on the backing property
+            </summary>
+        </member>
+    </members>
+</doc>

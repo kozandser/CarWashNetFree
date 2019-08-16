@@ -1,0 +1,36 @@
+{
+   "$types" : {
+      "CarWashNet.Infrastructure.DbSettings, CarWashNet, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null" : "1",
+      "CarWashNet.Infrastructure.SQLiteConnectionSetting, CarWashNet, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null" : "2",
+      "CarWashNet.Infrastructure.PostgreSQLConnectionSetting, CarWashNet, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null" : "3"
+   },
+   "$type" : "1",
+   "CurrentConnection" : "default",
+   "Connections" : [
+    {
+      "$type": "2",
+      "DataSource": "db.dat",
+      "ConnectionUser": null,
+      "ConnectionUserPassword": null,
+      "Name": "default"
+    },
+    {
+
+      "$type": "2",
+      "DataSource": "init.dat",
+      "ConnectionUser": null,
+      "ConnectionUserPassword": null,
+      "Name": "init"
+    },
+    {
+
+      "$type": "3",
+      "Server": "192.168.1.1",
+      "Port": 2568,
+      "DataBase": "asd",
+      "ConnectionUser": null,
+      "ConnectionUserPassword": null,
+      "Name": "postgres"
+    }
+   ]
+}
